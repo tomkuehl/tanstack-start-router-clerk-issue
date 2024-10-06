@@ -1,15 +1,16 @@
 import {
-  Link,
   Outlet,
   ScrollRestoration,
-  createRootRoute,
+  createRootRouteWithContext,
 } from '@tanstack/react-router';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { Body, Head, Html, Meta, Scripts } from '@tanstack/start';
 import * as React from 'react';
 import { ClerkProvider } from '@clerk/tanstack-start';
+import { QueryClient } from '@tanstack/react-query';
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+}>()({
   component: RootComponent,
 });
 
@@ -31,7 +32,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Body>
           {children}
           <ScrollRestoration />
-          <TanStackRouterDevtools position="bottom-right" />
           <Scripts />
         </Body>
       </Html>

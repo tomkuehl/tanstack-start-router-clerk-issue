@@ -1,20 +1,19 @@
-import {
-  createRouter as createTanStackRouter,
-  parseSearchWith,
-  stringifySearchWith,
-} from '@tanstack/react-router';
-import { stringify, parse } from 'jsurl2';
+import { createRouter as createTanStackRouter } from '@tanstack/react-router';
+import { QueryClient } from '@tanstack/react-query';
+import { routerWithQueryClient } from '@tanstack/react-router-with-query';
 import { routeTree } from './routeTree.gen';
 
 export function createRouter() {
+  const queryClient = new QueryClient();
   const router = createTanStackRouter({
     routeTree,
     defaultPreload: 'intent',
-    parseSearch: parseSearchWith(parse),
-    stringifySearch: stringifySearchWith(stringify),
+    context: {
+      queryClient,
+    },
   });
 
-  return router;
+  return routerWithQueryClient(router, queryClient);
 }
 
 declare module '@tanstack/react-router' {

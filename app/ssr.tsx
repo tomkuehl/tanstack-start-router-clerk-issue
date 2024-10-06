@@ -11,5 +11,5 @@ export default createClerkHandler(
   createStartHandler({
     createRouter,
     getRouterManifest,
-  })
+  }),
 )(defaultStreamHandler);
